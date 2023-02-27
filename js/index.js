@@ -20,7 +20,7 @@ function parseLrc(){
 // 将时间字符串解析为数字（秒）
 function parseTime(timeStr){
     var parts = timeStr.split(':')
-    return parseFloat((+parts[0]*60) + +parts[1]).toFixed(2)
+    return Number(parseFloat((+parts[0]*60) + +parts[1]).toFixed(2))
 }
 var lrcData = parseLrc()
 
@@ -30,12 +30,13 @@ var doms = {
     ul: document.querySelector('.container ul'),
     container: document.querySelector('.container')
 }
+console.log(doms)
 
 function findIndex(){
     // 播放器当前时间
     var curTime = doms.audio.currentTime
     for(var i = 0; i < lrcData.length; i++){
-        if(curTime < lrcData[i]){
+        if(curTime < lrcData[i].time){
             return i-1
         }
     }
@@ -70,7 +71,7 @@ var liHeight = doms.ul.children[0].clientHeight
 // 设置ul的偏移量
 function setOffset(){
     var index = findIndex()
-    var offset = liHeight * index + iHeight/2 - containerHeight/2
+    var offset = liHeight * index + liHeight/2 - containerHeight/2
     if(offset < 0){
         offset = 0
     }
